@@ -66,6 +66,7 @@ class WebpageAdapterWebView @JvmOverloads constructor(
 
     lateinit var fullscreenContainer: FrameLayout
     var onWaitingStateChanged: ((Boolean) -> Unit)? = null
+    var onPageStart: ((String) -> Unit)? = null
     var onPageFinished: ((String) -> Unit)? = null
     var onProgressChanged: ((Int) -> Unit)? = null
     var onFullscreenStateChanged: ((Boolean) -> Unit)? = null
@@ -248,6 +249,7 @@ class WebpageAdapterWebView @JvmOverloads constructor(
 
     @JavascriptInterface
     override fun loadUrl(url: String) {
+        onPageStart?.invoke(url)
         requestedUrl = url
         CoroutineScope(Dispatchers.Main).launch {
             resetPage(url)

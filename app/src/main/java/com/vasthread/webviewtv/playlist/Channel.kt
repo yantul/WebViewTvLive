@@ -5,6 +5,10 @@ import com.vasthread.webviewtv.settings.SettingsManager
 
 data class Channel @JvmOverloads constructor(
     var name: String = "",
+    @SerializedName("icon")
+    var icon: String = "",
+    @SerializedName("tag")
+    var tag: String = "",
     @SerializedName("group")
     var groupName: String = "",
     var urls: List<String> = emptyList(),
@@ -17,7 +21,12 @@ data class Channel @JvmOverloads constructor(
             return urls[index]
         }
 
+    var index: Int = 0
+        set(value) {
+            field = value
+        }
+
     override fun toString(): String {
-        return "name=$name, groupName=$groupName, urls=$urls"
+        return "name=$name, groupName=$groupName, urls=$urls, icon=$icon, tag=$tag"
     }
 }

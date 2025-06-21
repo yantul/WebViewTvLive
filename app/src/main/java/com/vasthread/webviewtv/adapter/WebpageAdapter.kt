@@ -31,4 +31,5 @@ abstract class WebpageAdapter {
 
     open fun isPlayingCheckEnabled() = true
 
+
 }

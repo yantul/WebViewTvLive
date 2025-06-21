@@ -2,7 +2,11 @@ package com.vasthread.webviewtv.widget
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.text.Layout.Alignment
 import android.util.AttributeSet
+import android.util.Log
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -56,6 +60,12 @@ class AppSettingsView @JvmOverloads constructor(
             arrayOf(context.getString(R.string.off), context.getString(R.string.on)),
             if (SettingsManager.isWebViewTouchable()) 1 else 0,
             onItemSelect = { SettingsManager.setWebViewTouchable(it != 0) }
+        ),
+        SettingItem(
+            R.string.app_auto_start_on_boot,
+            arrayOf(context.getString(R.string.off), context.getString(R.string.on)),
+            if (SettingsManager.isAutoStartOnBoot()) 1 else 0,
+            onItemSelect = { SettingsManager.setRequestAutoStartOnBoot(it != 0) }
         )
     )
 
@@ -120,6 +130,8 @@ class AppSettingsView @JvmOverloads constructor(
             tvTitle.text = rootView.context.getString(setting.titleRes)
             if (setting.items.isNullOrEmpty()) {
                 llItem.visibility = GONE
+                tvTitle.gravity = Gravity.CENTER;
+                tvTitle.textAlignment = TEXT_ALIGNMENT_CENTER;
             } else {
                 llItem.visibility = VISIBLE
                 tvItem.text = setting.items[setting.selectedItemPosition]

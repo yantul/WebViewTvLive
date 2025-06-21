@@ -9,17 +9,17 @@
 
 	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="50dp"
+		android:layout_height="24dp"
 		android:gravity="center"
 		android:orientation="horizontal"
 		android:paddingStart="5dp"
-		android:paddingTop="5dp"
-		android:paddingEnd="5dp"
+		android:paddingTop="3dp"
+		android:paddingEnd="3dp"
 		android:paddingBottom="5dp">
 
 		<Button
 			android:id="@+id/btnPageUp"
-			android:layout_width="70dp"
+			android:layout_width="20dp"
 			android:layout_height="match_parent"
 			android:background="@drawable/bg_item"
 			android:focusable="false"
@@ -34,11 +34,11 @@
 			android:gravity="center"
 			android:singleLine="true"
 			android:text="未加载列表"
-			android:textSize="17sp" />
+			android:textSize="11sp" />
 
 		<Button
 			android:id="@+id/btnPageDown"
-			android:layout_width="70dp"
+			android:layout_width="20dp"
 			android:layout_height="match_parent"
 			android:background="@drawable/bg_item"
 			android:focusable="false"

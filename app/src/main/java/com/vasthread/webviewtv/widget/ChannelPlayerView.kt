@@ -1,5 +1,6 @@
 package com.vasthread.webviewtv.widget
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Rect
@@ -14,6 +15,7 @@ import com.vasthread.webviewtv.R
 import com.vasthread.webviewtv.playlist.Channel
 import com.vasthread.webviewtv.settings.SettingsManager
 
+@SuppressLint("ObsoleteSdkInt")
 class ChannelPlayerView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
@@ -32,16 +34,27 @@ class ChannelPlayerView @JvmOverloads constructor(
             field = value
             if (value == null) {
                 webView.loadUrl(WebpageAdapterWebView.URL_BLANK)
-                channelBarView.dismiss()
+//                channelBarView.dismiss()
             } else {
                 webView.loadUrl(value.url)
-                channelBarView.setCurrentChannelAndShow(value)
+//                channelBarView.setCurrentChannelAndShow(value)
             }
         }
     var clickCallback: ((Float, Float) -> Unit)? = null
     var dismissAllViewCallback: (() -> Unit)? = null
     var onChannelReload: ((Channel) -> Unit)? = null
     var onVideoRatioChanged: ((Boolean) -> Unit)? = null
+    var backToUiModeStandard: (() -> Unit)? = null
+
+    var channelInfo: Boolean = false
+        set(value) {
+            if (value) {
+                channelBarView.setCurrentChannelAndShow(channel!!)
+            } else {
+                channelBarView.dismiss()
+            }
+            field = value
+        }
 
     private val gestureDetector = GestureDetector(context, object : GestureDetector.OnGestureListener {
 
@@ -50,7 +63,7 @@ class ChannelPlayerView @JvmOverloads constructor(
         override fun onShowPress(e: MotionEvent) = Unit
 
         override fun onSingleTapUp(e: MotionEvent): Boolean {
-            clickCallback?.invoke(e.x, e.y)
+            // clickCallback?.invoke(e.x, e.y)
             return true
         }
 
@@ -70,11 +83,15 @@ class ChannelPlayerView @JvmOverloads constructor(
         setBackgroundColor(Color.BLACK)
         webView = findViewById(R.id.webView)
         channelBarView = findViewById(R.id.channelBarView)
+        channelBarView.setBackgroundColor(Color.TRANSPARENT)
         waitingView = findViewById(R.id.waitingView)
         waitingView.playerView = this
         webView.apply {
             fullscreenContainer = this@ChannelPlayerView.findViewById(R.id.fullscreenContainer)
-            onPageFinished = {}
+            onPageStart = { }
+            onPageFinished = {
+                    this.postDelayed(Runnable { backToUiModeStandard?.invoke() }, 5000L)
+            }
             onProgressChanged = { channelBarView.setProgress(it) }
             onFullscreenStateChanged = {}
             onWaitingStateChanged = { waitingView.visibility = if (it) VISIBLE else GONE }

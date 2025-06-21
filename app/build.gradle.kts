@@ -5,19 +5,20 @@ plugins {
 
 android {
     namespace = "com.vasthread.webviewtv"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.vasthread.webviewtv"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 6
         versionName = "1.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         ndk {
-            abiFilters += listOf("x86_64")
+            //noinspection ChromeOsAbiSupport
+            abiFilters += listOf("arm64-v8a", "armeabi-v7a")
         }
     }
 
@@ -35,6 +36,10 @@ android {
         jvmTarget = "1.8"
     }
 
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
+
 }
 
 dependencies {
@@ -48,4 +53,6 @@ dependencies {
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
     implementation("org.apache.commons:commons-lang3:3.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
 }

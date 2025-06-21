@@ -13,6 +13,12 @@ data class Playlist(
                     ?: ChannelGroup(it.groupName).apply { groups.add(this) }
                 channelGroup.channels.add(it)
             }
+
+            groups.forEach { group ->
+                group.channels.forEachIndexed { index, channel ->
+                    channel.index = index + 1
+                }
+            }
             return Playlist(title, groups)
         }
 

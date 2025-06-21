@@ -117,6 +117,15 @@ function wvt_main() {
 	setTimeout(() => { wvt_loop(0) }, 500);
 }
 
+function wvt_clickHrefByID(id) {
+	var element = document.querySelector(id);
+	if (element) {
+		element.click(); // 触发点击事件
+	} else {
+		console.log("Element not found");
+	}
+}
+
 if (!window.wvt_javascriptInjected) {
 	console.log("WebViewTv javascript injected successfully.");
 	console.log("selector=[" + selector + "], enterFullscreenButton=[" + enterFullscreenButton
